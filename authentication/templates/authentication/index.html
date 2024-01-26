@@ -1,0 +1,19 @@
+{% load socialaccount %}
+
+<html>
+<head>
+
+</head>
+<body>
+  <div style="margin-top: 160px">
+      {% if request.user.is_authenticated %}
+           <a href="{% url 'account_logout' %}">Logout</a>
+      {% endif %}
+
+    {% if not request.user.is_authenticated %}
+           <a href="/accounts/saml/mock-saml/login/">SSO Login</a>
+      {% endif %}
+
+  </div>
+</body>
+</html>
