@@ -3,6 +3,9 @@
 import os
 import sys
 
+import faulthandler
+faulthandler.enable()
+
 
 def main():
     """Run administrative tasks."""
