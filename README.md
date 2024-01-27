@@ -5,12 +5,14 @@ is configured as Identity provider for testing.
 
 We have added below code in `manage.py` to output logs for segfault.
 
-The error is occurring in Mac only. In Ubuntu 20.04 (docker setup instruction below) it is working correctly.
-
 ```python
 import faulthandler
 faulthandler.enable()
 ```
+
+The error is occurring in Mac only. In Ubuntu 20.04 (docker setup instruction below) it is working correctly.
+
+
 
 ## Setup
 Python version for below setup is `3.10.12`
@@ -296,6 +298,40 @@ otool -L $(python -c "import xmlsec; print(xmlsec.__file__)")                   
 	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.11)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.0.0)
 	/usr/lib/libicucore.A.dylib (compatibility version 1.0.0, current version 70.1.0)
+
+otool -L /usr/local/opt/libxmlsec1/lib/libxmlsec1.1.dylib                                                                              ─╯
+/usr/local/opt/libxmlsec1/lib/libxmlsec1.1.dylib:
+	/usr/local/opt/libxmlsec1/lib/libxmlsec1.1.dylib (compatibility version 4.0.0, current version 4.37.0)
+	/usr/lib/libxslt.1.dylib (compatibility version 3.0.0, current version 3.26.0)
+	/usr/local/opt/libxml2/lib/libxml2.2.dylib (compatibility version 13.0.0, current version 13.3.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.0.0)
+	
+	
+brew info libxmlsec1
+Required: gnutls ✘, libgcrypt ✔, libxml2 ✔, openssl@3 ✔
+
+brew install gnutls
+brew info libxmlsec1
+Required: gnutls ✔, libgcrypt ✔, libxml2 ✔, openssl@3 ✔
+
+------
+
+brew uninstall libxmlsec1
+brew uninstall libxml2
+
+# install libxmlsec1 using below script becasuse the latest version gives error
+export DESIRED_SHA="7f35e6ede954326a10949891af2dba47bbe1fc17"
+wget -O /tmp/libxmlsec1.rb "https://raw.githubusercontent.com/Homebrew/homebrew-core/${DESIRED_SHA}/Formula/libxmlsec1.rb"
+brew install --formula /tmp/libxmlsec1.rb
+
+delete venv, create venv again and reinstall dependencies
+pip install --no-binary :all: --force-reinstall lxml==4.9.3
+
+python -c "import lxml.etree as etree;print(etree.LXML_VERSION);print(etree.LIBXML_VERSION);print(etree.LIBXML_COMPILED_VERSION);"
+(4, 9, 3, 0)
+(2, 9, 13)
+(2, 9, 13)
+
 
 
 
