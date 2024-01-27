@@ -196,3 +196,107 @@ libgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (0x0000ffffa3d92000)
 
 ```
 
+## In Mac
+```
+
+python -c "import lxml.etree as etree;print(etree.LXML_VERSION);print(etree.LIBXML_VERSION);print(etree.LIBXML_COMPILED_VERSION);"
+(4, 9, 3, 0)
+(2, 9, 13)
+(2, 9, 13)
+
+Here LIBXML_VERSION (2, 9, 13) is Mac system installed libxml2 version. It is not using our
+brew installed libxml2
+
+Mac libxml version:
+/usr/bin/xmllint --version                                                                                                             ─╯
+/usr/bin/xmllint: using libxml version 20913
+libxml - 2.9.13
+
+brew info libxml2
+libxml2: stable 2.12.4 (bottled), HEAD [keg-only]
+
+brew ls libxml2                                                                                                                        ─╯
+/usr/local/Cellar/libxml2/2.12.4/bin/xml2-config
+/usr/local/Cellar/libxml2/2.12.4/bin/xmlcatalog
+/usr/local/Cellar/libxml2/2.12.4/bin/xmllint
+/usr/local/Cellar/libxml2/2.12.4/include/libxml2/ (46 files)
+/usr/local/Cellar/libxml2/2.12.4/lib/libxml2.2.dylib
+/usr/local/Cellar/libxml2/2.12.4/lib/cmake/libxml2/libxml2-config.cmake
+/usr/local/Cellar/libxml2/2.12.4/lib/pkgconfig/libxml-2.0.pc
+/usr/local/Cellar/libxml2/2.12.4/lib/python3.11/ (10 files)
+/usr/local/Cellar/libxml2/2.12.4/lib/python3.12/ (10 files)
+/usr/local/Cellar/libxml2/2.12.4/lib/libxml2.dylib
+/usr/local/Cellar/libxml2/2.12.4/share/aclocal/libxml.m4
+/usr/local/Cellar/libxml2/2.12.4/share/doc/ (68 files)
+/usr/local/Cellar/libxml2/2.12.4/share/gtk-doc/ (54 files)
+/usr/local/Cellar/libxml2/2.12.4/share/man/ (3 files)
+
+/usr/local/Cellar/libxml2/2.12.4/bin/xmllint --version
+/usr/local/Cellar/libxml2/2.12.4/bin/xmllint: using libxml version 21204
+
+otool -L /usr/local/Cellar/libxml2/2.12.4/lib/libxml2.2.dylib
+/usr/local/Cellar/libxml2/2.12.4/lib/libxml2.2.dylib:
+	/usr/local/opt/libxml2/lib/libxml2.2.dylib (compatibility version 15.0.0, current version 15.4.0)
+	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.11)
+	/usr/local/opt/icu4c/lib/libicui18n.73.dylib (compatibility version 73.0.0, current version 73.2.0)
+	/usr/local/opt/icu4c/lib/libicuuc.73.dylib (compatibility version 73.0.0, current version 73.2.0)
+	/usr/local/opt/icu4c/lib/libicudata.73.dylib (compatibility version 73.0.0, current version 73.2.0)
+	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.100.3)
+
+/usr/local/bin/xmlsec1 --version                                                                                                       ─╯
+xmlsec1 1.2.37 (openssl)
+
+brew info libxmlsec1
+/usr/local/Cellar/libxmlsec1/1.2.37
+
+brew ls xmlsec1                                                                                                                        ─╯
+/usr/local/Cellar/libxmlsec1/1.2.37/bin/xmlsec1
+/usr/local/Cellar/libxmlsec1/1.2.37/bin/xmlsec1-config
+/usr/local/Cellar/libxmlsec1/1.2.37/include/xmlsec1/ (40 files)
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1-gcrypt.1.dylib
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1-gnutls.1.dylib
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1-openssl.1.dylib
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1.1.dylib
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/pkgconfig/ (4 files)
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/ (9 other files)
+/usr/local/Cellar/libxmlsec1/1.2.37/share/aclocal/xmlsec1.m4
+/usr/local/Cellar/libxmlsec1/1.2.37/share/doc/ (150 files)
+/usr/local/Cellar/libxmlsec1/1.2.37/share/man/ (2 files)
+
+
+
+otool -L /usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1.1.dylib                                                                    ─╯
+/usr/local/Cellar/libxmlsec1/1.2.37/lib/libxmlsec1.1.dylib:
+	/usr/local/opt/libxmlsec1/lib/libxmlsec1.1.dylib (compatibility version 4.0.0, current version 4.37.0)
+	/usr/lib/libxslt.1.dylib (compatibility version 3.0.0, current version 3.26.0)
+	/usr/local/opt/libxml2/lib/libxml2.2.dylib (compatibility version 13.0.0, current version 13.3.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.0.0)
+
+The brew installed libxmlsec1 is using /usr/local/opt/libxml2/lib/libxml2.2.dylib which is also brew installed
+version
+
+After updating zshrc and re-installing requirements
+export PATH="/usr/local/opt/libxml2/bin:$PATH"
+source ~/.zshrc
+
+pip uninstall lxml
+pip install --no-binary lxml lxml==4.9.3
+
+
+
+
+otool -L $(python -c "import xmlsec; print(xmlsec.__file__)")                                                                          ─╯
+/Users/vinodpandey/Projects/saml-segfault/venv/lib/python3.10/site-packages/xmlsec.cpython-310-darwin.so:
+	/usr/local/opt/libxmlsec1/lib/libxmlsec1-openssl.1.dylib (compatibility version 4.0.0, current version 4.37.0)
+	/usr/local/opt/libxmlsec1/lib/libxmlsec1.1.dylib (compatibility version 4.0.0, current version 4.37.0)
+	/usr/local/opt/openssl@1.1/lib/libcrypto.1.1.dylib (compatibility version 1.1.0, current version 1.1.0)
+	/usr/lib/libxslt.1.dylib (compatibility version 3.0.0, current version 3.26.0)
+	/usr/lib/libxml2.2.dylib (compatibility version 10.0.0, current version 10.9.0)
+	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.11)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1319.0.0)
+	/usr/lib/libicucore.A.dylib (compatibility version 1.0.0, current version 70.1.0)
+
+
+
+```
