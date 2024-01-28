@@ -12,12 +12,14 @@ faulthandler.enable()
 
 The error is occurring in Mac only. In Ubuntu 20.04 (docker setup instruction below) it is working correctly.
 
+This issue was discussed at https://github.com/pennersr/django-allauth/issues/3593 and more details are at https://github.com/pennersr/django-allauth/issues/3593#issuecomment-1913433254
 
+In Mac M2, after `pip install lxml==5.1.0` the issue got fixed. The details are in above link.
 
 ## Setup
 Python version for below setup is `3.10.12`
 ```shell
-python -V                                                                                                                        ─╯
+python -V
 Python 3.10.12
 
 ```
@@ -325,12 +327,12 @@ wget -O /tmp/libxmlsec1.rb "https://raw.githubusercontent.com/Homebrew/homebrew-
 brew install --formula /tmp/libxmlsec1.rb
 
 delete venv, create venv again and reinstall dependencies
-pip install --no-binary :all: --force-reinstall lxml==4.9.3
+pip install -r requirements.txt --no-cache-dir
 
 python -c "import lxml.etree as etree;print(etree.LXML_VERSION);print(etree.LIBXML_VERSION);print(etree.LIBXML_COMPILED_VERSION);"
 (4, 9, 3, 0)
-(2, 9, 13)
-(2, 9, 13)
+(2, 10, 3)
+(2, 10, 3)
 
 
 
