@@ -166,6 +166,22 @@ is using its bundled version of libxml2.
 
 xmlsec
 ```
+
+apt show libxml2
+Package: libxml2
+Version: 2.9.14+dfsg-1.3ubuntu3.3
+
+
+import ctypes
+
+libxml2 = ctypes.CDLL("libxml2.so.2")
+version = ctypes.c_char_p.in_dll(libxml2, "xmlParserVersion")
+print("xmlsec is using libxml2 version:", version.value.decode())
+
+xmlsec is using libxml2 version: 20914
+
+
+
 pip3.10 show xmlsec
 Name: xmlsec
 Version: 1.3.13
