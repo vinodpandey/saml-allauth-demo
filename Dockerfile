@@ -1,5 +1,5 @@
 # Use an official Ubuntu base image
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND noninteractive
@@ -41,6 +41,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 ## Install Python dependencies
+RUN python3.10 -m pip install --no-binary :all: lxml==5.4.0 
 RUN python3.10 -m pip install -U virtualenv \
     && python3.10 -m pip install --upgrade pip \
     && python3.10 -m pip install -r requirements.txt
